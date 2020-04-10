@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action="calculate" method="POST">
+    {% csrf_token %}
+    Enter the expression: <input type="text" name="exp">
+    <input type="submit">
+</form>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poll for the Best Tech Club in IITB</title>
+</head>
+<body>
+    <form action="poll_" method="POST">
+        {% csrf_token %}
+    According to you, which is the best technology club in IIT Bombay:</br></br>
+    {% for option in options %}
+    <input type="radio" id="{{option}}" name="club" value="{{option}}">
+    <label for="{{option}}">{{option}}</label></br>
+    {% endfor %}
+    <input type="submit">
+    </form>
+</body>
+</html>
