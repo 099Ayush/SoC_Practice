@@ -5,12 +5,11 @@ The calculator in 'calc_and_poll' inputs an expression which should be valid in 
 
 The ML_Practice folder contains a training dataset in 'data.csv' containing data about a number of samples of Iris flowers. The Python files contain classifier-classes which can classify the flowers into two species, namely, Setosa and Versicolor, using the sepal length and the petal length as the deciding parameters.
 
-The file 'perceptron.py' contains a Perceptron-based classifier which can be customized for desired number of iterations or epochs, the training rate, etc.
+The hyperparameters, such as the learning rate, the number of passes over the training dataset, the seed of random generation, and also the shuffle parameter in case of SGD-Adaline, are taken as input from the user. Then the model learns a classification relation (linear in these cases), and plots the scatter of the dataset, and the line(hyperplane) of classification on the same subplot, and also the plot of the cost function against the number of epochs in the second subplot.
 
-Also, the seed parameter in such classifiers can be used as a knob or hyperparameter to generate different results for different seeds, but the same everytime for any particular seed.
+Each python file implements an algorithm of Machine Learning, as listed below:-
 
-'adaline_gd.py' is the implementation of the general definition of Adaptive Linear Neuron(Adaline) learning algorithm, without the use of standardization or feature scaling. Also, the activation function in this case is the identity function. The hyperparameters are taken as inputs from the user.
-
-'adaline_std.py' implements standardization of the dataset so that its mean becomes zero and standard deviation one, and then the Adaline algorithm to the standardized dataset.
-
-All these files plot the scatter, and a filled contour, representing the hyperplane(a straight line in 2-D) devised by the model during learning from the training dataset of the Iris flowers. The second subplot in the figure obtained represents the number of errors or the value of cost function respectively for each epoch.
+1. perceptron.py: The Perceptron learning rule based on the MCP neuron model.
+2. adaline_gd.py: The Adaptive Linear Neuron rule, using Gradient Descent algorithm.
+3. adaline_std.py: Applying Adaline Gradient Descent algorithm on statndardized dataset.
+4. adaline_sgd.py: Stochastic Gradient Descent in Adaline.
