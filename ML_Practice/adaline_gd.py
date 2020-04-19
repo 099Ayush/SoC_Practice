@@ -36,15 +36,9 @@ eta = float(input('Learning Rate, eta: '))
 seed = int(input('Seed value (enter a random integer): '))
 
 df = pd.read_csv('data.csv')
-df1 = df[df['4'] == 'Iris-setosa']
-df2 = df[df['4'] == 'Iris-versicolor']
-ls11 = [t[0] for t in df1[['0']].values]
-ls12 = [t[0] for t in df1[['2']].values]
-ls21 = [t[0] for t in df2[['0']].values]
-ls22 = [t[0] for t in df2[['2']].values]
+X = df[['0', '2']][:100].values  # Training examples as points on 2-d plane.
 
-X = np.array(list(zip(ls11 + ls21, ls12 + ls22)))   # Training examples as points on 2-d plane.
-y = np.array([1 for t in range(len(ls11))] + [-1 for t in range(len(ls21))])    # Target values.
+y = df['4'][:100].replace('Iris-setosa', 1).replace('Iris-versicolor', -1).values    # Target values.
 
 ppn = AdalineGD(f_n_epochs=n_epochs, f_eta=eta, f_seed=seed)
 ppn.fit(X, y)   # Train the model.
@@ -63,8 +57,8 @@ z = np.array(z)
 z = z.reshape(xx1.shape)
 plt.figure(figsize=(12, 5))
 plt.subplot(121)
-plt.scatter(ls11, ls12, marker='o') # Scatter plot for Setosa Iris flowers.
-plt.scatter(ls21, ls22, marker='x') # Scatter plot for Versicolor Iris flowers.
+plt.scatter(X[:50, 0], X[:50, 1], marker='o') # Scatter plot for Setosa Iris flowers.
+plt.scatter(X[50:, 0], X[50:, 1], marker='x') # Scatter plot for Versicolor Iris flowers.
 plt.contourf(x1, x2, z, alpha=0.3)
 plt.xlabel('Sepal Length: cm')
 plt.ylabel('Petal length: cm')
