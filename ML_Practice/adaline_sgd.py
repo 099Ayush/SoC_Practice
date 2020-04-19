@@ -61,7 +61,7 @@ class AdalineSGD(object):
         return self
 
 
-plt.figure(figsize=(12, 5))
+plt.figure(figsize=(14, 5))
 plt.subplot(121)
 df = pd.read_csv('data.csv')
 X = df[['0', '2']].values[:100]
@@ -86,6 +86,10 @@ def f(x):   # This function represents the classification hyperplane(line)
 
 
 plt.plot(rn, f(rn), 'g')
+plt.xlabel('Sepal Length (standardized): cm')
+plt.ylabel('Petal length (standardized): cm')
 plt.subplot(122)
-plt.plot(range(1, len(ad_sgd.cost_) + 1), ad_sgd.cost_)
+plt.xlabel('Epoch Number')
+plt.ylabel('Logarithm(10) of Cost Function')
+plt.plot(range(1, len(ad_sgd.cost_) + 1), np.log10(ad_sgd.cost_))
 plt.show()
