@@ -11,4 +11,6 @@ Also, the seed parameter in such classifiers can be used as a knob or hyperparam
 
 'adaline_gd.py' is the implementation of the general definition of Adaptive Linear Neuron(Adaline) learning algorithm, without the use of standardization or feature scaling. Also, the activation function in this case is the identity function. The hyperparameters are taken as inputs from the user.
 
-Both these files plot the scatter, and a filled contour, representing the hyperplane(a straight line in 2-D) devised by the model during learning from the training dataset of the Iris flowers. The second subplot in the figure obtained represents the number of errors or the value of cost function respectively for each epoch.
+'adaline_std.py' implements standardization of the dataset so that its mean becomes zero and standard deviation one, and then the Adaline algorithm to the standardized dataset.
+
+All these files plot the scatter, and a filled contour, representing the hyperplane(a straight line in 2-D) devised by the model during learning from the training dataset of the Iris flowers. The second subplot in the figure obtained represents the number of errors or the value of cost function respectively for each epoch.
