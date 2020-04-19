@@ -21,6 +21,7 @@ class Perceptron(object):
                 predicted = self.prediction(x)
                 error = target - predicted
                 self.w_[1:] += self.eta * error * x
+                self.w_[0] += self.eta * error
                 n_errors += int(error != 0)
             self.errors_.append(n_errors)
 
