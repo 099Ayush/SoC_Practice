@@ -4,21 +4,21 @@ import pandas as pd
 
 class Perceptron(object):
 
-    def __init__(self, n_epochs=1000, eta=0.001, seed=1):
-        self.n_epochs = n_epochs    # Number of passes over training dataset
-        self.eta = eta  # The training rate
-        self.seed = seed    # Seed to generate random weight vector, can be used to regain same result
+    def __init__(self, f_n_epochs=1000, f_eta=0.001, f_seed=1):
+        self.n_epochs = f_n_epochs    # Number of passes over training dataset
+        self.eta = f_eta  # The training rate
+        self.seed = f_seed    # Seed to generate random weight vector, can be used to regain same result
 
-    def fit(self, X, y):
+    def fit(self, f_X, f_y):
 
         # Generate random weight vector, one extra element as the bias unit.
-        self.w_ = np.random.RandomState(self.seed).normal(loc=0.0, scale=1.0, size=1 + X.shape[1])
+        self.w_ = np.random.RandomState(self.seed).normal(loc=0.0, scale=1.0, size=1 + f_X.shape[1])
         self.errors_ = []   # A measure of how well the model performs after enough number of epochs.
 
         for _ in range(self.n_epochs):
             n_errors = 0
-            for x, target in zip(X, y): # Execute the perceptron learning algorithm
-                predicted = self.prediction(x)
+            for x, target in zip(f_X, f_y):     # Execute the perceptron learning algorithm
+                predicted = self.predict(x)
                 error = target - predicted
                 self.w_[1:] += self.eta * error * x
                 self.w_[0] += self.eta * error
@@ -27,9 +27,9 @@ class Perceptron(object):
 
         return self
 
-    def prediction(self, X): # Function to make prediction about a new dataset,
-                             # or one from the training dataset while learning.
-        value = X.dot(self.w_[1:]) + self.w_[0]
+    def predict(self, f_X):  # Function to make prediction about a new dataset,
+                                # or one from the training dataset while learning.
+        value = f_X.dot(self.w_[1:]) + self.w_[0]
         return np.where(value >= 0, 1, -1)
 
 
@@ -38,17 +38,11 @@ eta = float(input('Learning Rate, eta: '))
 seed = int(input('Seed value (enter a random integer): '))
 
 df = pd.read_csv('data.csv')
-df1 = df[df['4'] == 'Iris-setosa']
-df2 = df[df['4'] == 'Iris-versicolor']
-ls11 = [t[0] for t in df1[['0']].values]
-ls12 = [t[0] for t in df1[['2']].values]
-ls21 = [t[0] for t in df2[['0']].values]
-ls22 = [t[0] for t in df2[['2']].values]
+X = df[['0', '2']][:100].values  # Training examples as points on 2-d plane.
 
-X = np.array(list(zip(ls11 + ls21, ls12 + ls22)))   # Training examples as points on 2-d plane.
-y = np.array([1 for t in range(len(ls11))] + [-1 for t in range(len(ls21))])    # Target values.
+y = df['4'][:100].replace('Iris-setosa', 1).replace('Iris-versicolor', -1).values    # Target values.
 
-ppn = Perceptron(n_epochs=n_epochs, eta=eta, seed=seed)
+ppn = Perceptron(f_n_epochs=n_epochs, f_eta=eta, f_seed=seed)
 ppn.fit(X, y)   # Train the model.
 
 # To create a filled contour plot consisting of division hyperplane(here a straight line):-
@@ -60,18 +54,18 @@ xx1, xx2 = np.meshgrid(x1, x2)
 points = np.array(list(zip(xx1.ravel(), xx2.ravel())))
 z = []
 for point in points:
-    z.append(ppn.prediction(point))
+    z.append(ppn.predict(point))
 z = np.array(z)
 z = z.reshape(xx1.shape)
 plt.figure(figsize=(12, 5))
 plt.subplot(121)
-plt.scatter(ls11, ls12, marker='o') # Scatter plot for Setosa Iris flowers.
-plt.scatter(ls21, ls22, marker='x') # Scatter plot for Versicolor Iris flowers.
+plt.scatter(X[:50, 0], X[:50, 1], marker='o') # Scatter plot for Setosa Iris flowers.
+plt.scatter(X[50:, 0], X[50:, 1], marker='x') # Scatter plot for Versicolor Iris flowers.
 plt.contourf(x1, x2, z, alpha=0.3)
 plt.xlabel('Sepal Length: cm')
 plt.ylabel('Petal length: cm')
 plt.subplot(122)
-plt.plot(range(1, len(ppn.errors_) + 1), ppn.errors_)
+plt.plot(range(1, len(ppn.errors_) + 1), ppn.errors_, marker='o')
 plt.xlabel('Epoch number')
-plt.ylabel('Number of updates')
+plt.ylabel('Number of Updates')
 plt.show()
